@@ -7,28 +7,28 @@ struct MainView: View {
                 .tabItem {
                     Image("mapa")
                         .resizable()
-                        .frame(width: 24, height: 24) // Ajusta el tamaño de los íconos
+                        .frame(width: 5, height: 5)
                     Text("Mapa")
                 }
             CalendarView()
                 .tabItem {
                     Image("aprende")
                         .resizable()
-                        .frame(width: 24, height: 24) // Ajusta el tamaño de los íconos
+                        .frame(width: 5, height: 5)
                     Text("Aprende")
                 }
             HistoryView()
                 .tabItem {
                     Image("reciclaje")
                         .resizable()
-                        .frame(width: 24, height: 24) // Ajusta el tamaño de los íconos
+                        .frame(width: 5, height: 5)
                     Text("Reciclaje")
                 }
             ProfileView()
                 .tabItem {
                     Image("salud")
                         .resizable()
-                        .frame(width: 24, height: 24) // Ajusta el tamaño de los íconos
+                        .frame(width: 5, height: 5)
                     Text("Salud")
                 }
         }

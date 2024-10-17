@@ -11,7 +11,7 @@ import SwiftUI
 struct Tlalicalli_v2App: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MainView()
         }
     }
 }
