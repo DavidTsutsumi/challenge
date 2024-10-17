@@ -13,4 +13,5 @@ struct Destination: Identifiable {
     var name: String
     var location: String
     var color: Color
+    var imageName: String  // Nombre de la imagen específica para cada destino
 }
