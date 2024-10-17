@@ -1,10 +1,3 @@
-//
-//  MainView.swift
-//  Tlalicalli_v2
-//
-//  Created by Facultad de Contaduría y Administración on 17/10/24.
-//
-
 import SwiftUI
 
 struct MainView: View {
@@ -13,28 +6,32 @@ struct MainView: View {
             ContentView()
                 .tabItem {
                     Image("mapa")
+                        .resizable()
+                        .frame(width: 24, height: 24) // Ajusta el tamaño de los íconos
                     Text("Mapa")
                 }
             CalendarView()
                 .tabItem {
                     Image("aprende")
+                        .resizable()
+                        .frame(width: 24, height: 24) // Ajusta el tamaño de los íconos
                     Text("Aprende")
                 }
             HistoryView()
                 .tabItem {
                     Image("reciclaje")
+                        .resizable()
+                        .frame(width: 24, height: 24) // Ajusta el tamaño de los íconos
                     Text("Reciclaje")
                 }
             ProfileView()
                 .tabItem {
                     Image("salud")
+                        .resizable()
+                        .frame(width: 24, height: 24) // Ajusta el tamaño de los íconos
                     Text("Salud")
                 }
         }
         .accentColor(.orange)
     }
-}
-
-#Preview {
-    MainView()
 }
