@@ -10,21 +10,21 @@ struct MainView: View {
                         .frame(width: 5, height: 5)
                     Text("Mapa")
                 }
-            CalendarView()
+            LearnView()
                 .tabItem {
                     Image("aprende")
                         .resizable()
                         .frame(width: 5, height: 5)
                     Text("Aprende")
                 }
-            HistoryView()
+            RecyView()
                 .tabItem {
                     Image("reciclaje")
                         .resizable()
                         .frame(width: 5, height: 5)
                     Text("Reciclaje")
                 }
-            ProfileView()
+            HealthView()
                 .tabItem {
                     Image("salud")
                         .resizable()
