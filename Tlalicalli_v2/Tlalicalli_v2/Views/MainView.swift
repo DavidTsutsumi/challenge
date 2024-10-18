@@ -35,3 +35,7 @@ struct MainView: View {
         .accentColor(.orange)
     }
 }
+
+#Preview {
+    MainView()
+}
