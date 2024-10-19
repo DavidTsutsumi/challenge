@@ -10,7 +10,7 @@ import SwiftUI
 struct LearnView: View {
     var body: some View {
         VStack {
-            Text("Learn View")
+            Text("Aprende View")
                 .font(.largeTitle)
                 .foregroundColor(.gray)
             Text("Aquí podrás ver el historial de tus actividades.")

@@ -3,6 +3,7 @@ import SwiftUI
 
 class DestinationViewModel: ObservableObject {
     @Published var destinations: [Destination] = [
+
         Destination(name: "Centro de Reciclaje Milpa Alta", location: "Milpa Alta, CDMX", imageName: "recycle", category: "PET", latitude: 19.3005, longitude: -99.1043),
         Destination(name: "Punto Verde", location: "Milpa Alta, CDMX", imageName: "recycle", category: "Electrónicos", latitude: 19.3050, longitude: -99.1070),
         Destination(name: "Centro de Reciclaje Milpa Alta", location: "Milpa Alta, CDMX", imageName: "recycle", category: "PET", latitude: 19.3105, longitude: -99.1040),
