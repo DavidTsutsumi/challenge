@@ -6,7 +6,8 @@ struct DestinationCard: View {
 
     var body: some View {
         VStack {
-            Image(destination.imageName) 
+            Image(destination.imageName)
+
                 .resizable()
                 .scaledToFill()
                 .frame(width: 180, height: 120)

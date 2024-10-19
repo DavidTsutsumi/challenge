@@ -2,6 +2,7 @@ import Foundation
 import SwiftUI
 
 struct Destination: Identifiable {
+
     var id = UUID()  // Identificador del lugar
     var name: String  // Nombre del lugar
     var location: String   // Lugar
