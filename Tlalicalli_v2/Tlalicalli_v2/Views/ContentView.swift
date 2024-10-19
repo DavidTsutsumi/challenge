@@ -16,15 +16,15 @@ struct ContentView: View {
         VStack(spacing: 20) {
             
             HStack {
-                Image("logoApp2") // Asegúrate de que la imagen esté en tus recursos
+                Image("logoApp2")
                     .resizable()
                     .scaledToFit()
-                    .frame(height: 50) // Ajusta el tamaño según tus necesidades
+                    .frame(height: 50)
                     .padding(.top, 10)
                 
                 Text("Tlalicalli")
-                    .font(.system(size: 40, weight: .bold, design: .rounded)) // Cambia la fuente, tamaño y peso
-                    .foregroundColor(.brown) // Cambia el color según tu preferencia
+                    .font(.system(size: 40, weight: .bold, design: .rounded))
+                    .foregroundColor(.brown)
                     .shadow(color: .black.opacity(0.3), radius: 5, x: 0, y: 5) // Sombra para el texto
                     .padding(.top, 10)
             }

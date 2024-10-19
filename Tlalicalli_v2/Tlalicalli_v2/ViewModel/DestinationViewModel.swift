@@ -1,15 +1,5 @@
 import SwiftUI
 
-//class DestinationViewModel: ObservableObject {
-//    @Published var destinations: [Destination] = [
-//        Destination(name: "Punto de Reciclaje A", location: "Ubicación A", imageName: "reciclajeA", category: "Electrónicos"),
-//        Destination(name: "Punto de Reciclaje B", location: "Ubicación B", imageName: "reciclajeB", category: "PET"),
-//        Destination(name: "Punto de Reciclaje C", location: "Ubicación C", imageName: "reciclajeC", category: "Vidrio"),
-//        Destination(name: "Punto de Reciclaje D", location: "Ubicación D", imageName: "reciclajeD", category: "Papel"),
-//        Destination(name: "Punto de Reciclaje E", location: "Ubicación E", imageName: "reciclajeE", category: "Orgánico"),
-//        Destination(name: "Prueba", location: "Ubicación Prueba", imageName: "", category: "1111")
-//    ]
-//}
 
 class DestinationViewModel: ObservableObject {
     @Published var destinations: [Destination] = [
@@ -19,7 +9,6 @@ class DestinationViewModel: ObservableObject {
         Destination(name: "Centro de Reciclaje Milpa Alta", location: "Milpa Alta, CDMX", imageName: "recycle", category: "PET", latitude: 19.3205, longitude: -99.1040),
         Destination(name: "Centro de Reciclaje Milpa Alta", location: "Milpa Alta, CDMX", imageName: "recycle", category: "PET", latitude: 19.3305, longitude: -99.1049),
 
-        // Agrega más destinos según sea necesario
     ]
 }
 
