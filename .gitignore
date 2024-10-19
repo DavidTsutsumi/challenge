@@ -4,3 +4,5 @@
 *.xcodeproj/
 .DS_Store
 Tlalicalli_v2/Tlalicalli_v2.xcodeproj/project.xcworkspace/xcuserdata/*.xcuserdatad/UserInterfaceState.xcuserstate
+.DS_Store
+*.xcuserstate

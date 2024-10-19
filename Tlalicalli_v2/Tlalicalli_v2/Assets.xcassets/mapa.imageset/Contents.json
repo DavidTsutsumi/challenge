@@ -2,6 +2,9 @@
   "images" : [
     {
       "filename" : "Designer-removebg-preview.png",
+<<<<<<< HEAD
+      "idiom" : "universal"
+=======
       "idiom" : "universal",
       "scale" : "1x"
     },
@@ -12,6 +15,7 @@
     {
       "idiom" : "universal",
       "scale" : "3x"
+>>>>>>> c9882a72b6194c9feb61a67f1c1747d5bde15ac6
     }
   ],
   "info" : {
