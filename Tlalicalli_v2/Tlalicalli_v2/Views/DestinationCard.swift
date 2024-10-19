@@ -1,9 +1,3 @@
-//
-//  DestinationCard.swift
-//  Tlalicalli_v2
-//
-//  Created by Facultad de Contaduría y Administración on 17/10/24.
-//
 
 import SwiftUI
 
@@ -12,7 +6,8 @@ struct DestinationCard: View {
 
     var body: some View {
         VStack {
-            Image(destination.imageName) // Usa la imagen específica de cada destino
+            Image(destination.imageName)
+
                 .resizable()
                 .scaledToFill()
                 .frame(width: 180, height: 120)

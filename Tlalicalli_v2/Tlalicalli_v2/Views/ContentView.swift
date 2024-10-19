@@ -14,11 +14,20 @@ struct ContentView: View {
 
     var body: some View {
         VStack(spacing: 20) {
-            Text("Tlalicalli")
-                .font(.largeTitle)
-                .padding(.top, 20)
             
-    
+            HStack {
+                Image("logoApp2")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(height: 50)
+                    .padding(.top, 10)
+                
+                Text("Tlalicalli")
+                    .font(.system(size: 40, weight: .bold, design: .rounded))
+                    .foregroundColor(.brown)
+                    .shadow(color: .black.opacity(0.3), radius: 5, x: 0, y: 5) // Sombra para el texto
+                    .padding(.top, 10)
+            }
             
             // Mapa pequeño
             MapView(showFullMap: $showFullMap)
@@ -29,7 +38,7 @@ struct ContentView: View {
                     showFullMap.toggle()
                 }
             
-            Text("Popular Destinations")
+            Text("Destinos de Reciclaje")
                 .font(.headline)
                 .padding(.top, 20)
             
