@@ -126,7 +126,7 @@ struct HealthView: View {
 
 struct HealthMapView: View {
     @State private var region = MKCoordinateRegion(
-        center: CLLocationCoordinate2D(latitude: 19.74, longitude: -99.0152), // Coordenadas del centro
+        center: CLLocationCoordinate2D(latitude: 19.179109540913146, longitude: -99.02369245713565), // Coordenadas del centro
         span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
     )
     
