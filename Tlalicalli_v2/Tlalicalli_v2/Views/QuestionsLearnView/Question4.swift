@@ -1,13 +1,13 @@
 //
-//  Question1.swift
+//  Question4.swift
 //  Tlalicalli_v2
 //
-//  Created by David Israel Tsutsumi Bernal on 19/10/24.
+//  Created by David Israel Tsutsumi Bernal on 20/10/24.
 //
 
 import SwiftUI
 
-struct Question1: View {
+struct Question4: View {
     @State private var selectedAnswer: String? = nil
     @State private var showAnswerFeedback = false
     @State private var showQuestion = false
@@ -26,12 +26,12 @@ struct Question1: View {
             // Pregunta
             if showQuestion {
                 VStack {
-                    Text("¿Cuál es una de las principales actividades económicas de Milpa Alta?")
+                    Text("¿Cómo puede el compostaje beneficiar a Milpa Alta?")
                         .font(.body)
                         .padding()
                     
                     // Opciones de respuesta
-                    ForEach(["Producción de Nopal", "Minería", "Pesca", "Turismo"], id: \.self) { option in
+                    ForEach(["Aumenta la producción de fertilizantes químicos", "Mejora la calidad del suelo", "Reduce la producción de cultivos", "Crea residuos tóxicos"], id: \.self) { option in
                         Button(action: {
                             selectedAnswer = option
                             showAnswerFeedback = true
@@ -46,12 +46,12 @@ struct Question1: View {
                     
                     // Feedback de respuesta
                     if showAnswerFeedback {
-                        if selectedAnswer == "Producción de Nopal" {
-                            Text("¡Correcto! La producción de Nopal es clave en Milpa Alta.")
+                        if selectedAnswer == "Mejora la calidad del suelo" {
+                            Text("¡Correcto! El compostaje mejora la calidad del suelo y reduce la necesidad de fertilizantes químicos.")
                                 .foregroundColor(.green)
                                 .padding()
                         } else {
-                            Text("Incorrecto, intenta nuevamente. La producción de Nopal es la respuesta correcta.")
+                            Text("Incorrecto, intenta nuevamente. La respuesta correcta es que el compostaje mejora la calidad del suelo.")
                                 .foregroundColor(.red)
                                 .padding()
                         }
@@ -78,6 +78,4 @@ struct Question1: View {
         .padding(.vertical)
     }
 }
-
-
 

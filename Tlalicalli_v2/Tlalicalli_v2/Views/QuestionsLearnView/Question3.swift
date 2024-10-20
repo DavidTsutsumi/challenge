@@ -1,13 +1,13 @@
 //
-//  Question1.swift
+//  Question3.swift
 //  Tlalicalli_v2
 //
-//  Created by David Israel Tsutsumi Bernal on 19/10/24.
+//  Created by David Israel Tsutsumi Bernal on 20/10/24.
 //
 
 import SwiftUI
 
-struct Question1: View {
+struct Question3: View {
     @State private var selectedAnswer: String? = nil
     @State private var showAnswerFeedback = false
     @State private var showQuestion = false
@@ -26,12 +26,12 @@ struct Question1: View {
             // Pregunta
             if showQuestion {
                 VStack {
-                    Text("¿Cuál es una de las principales actividades económicas de Milpa Alta?")
+                    Text("¿Cómo ayuda la reforestación a Milpa Alta?")
                         .font(.body)
                         .padding()
                     
                     // Opciones de respuesta
-                    ForEach(["Producción de Nopal", "Minería", "Pesca", "Turismo"], id: \.self) { option in
+                    ForEach(["Aumenta el turismo", "Actúa como sumidero de carbono", "Incrementa el precio de la tierra", "Destruye ecosistemas"], id: \.self) { option in
                         Button(action: {
                             selectedAnswer = option
                             showAnswerFeedback = true
@@ -46,12 +46,12 @@ struct Question1: View {
                     
                     // Feedback de respuesta
                     if showAnswerFeedback {
-                        if selectedAnswer == "Producción de Nopal" {
-                            Text("¡Correcto! La producción de Nopal es clave en Milpa Alta.")
+                        if selectedAnswer == "Actúa como sumidero de carbono" {
+                            Text("¡Correcto! La reforestación en Milpa Alta ayuda a mitigar el cambio climático actuando como sumidero de carbono.")
                                 .foregroundColor(.green)
                                 .padding()
                         } else {
-                            Text("Incorrecto, intenta nuevamente. La producción de Nopal es la respuesta correcta.")
+                            Text("Incorrecto, intenta nuevamente. La respuesta correcta es que actúa como sumidero de carbono.")
                                 .foregroundColor(.red)
                                 .padding()
                         }
@@ -78,6 +78,5 @@ struct Question1: View {
         .padding(.vertical)
     }
 }
-
 
 
