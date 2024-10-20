@@ -35,4 +35,3 @@ struct MainView: View {
         .accentColor(.orange)
     }
 }
-
