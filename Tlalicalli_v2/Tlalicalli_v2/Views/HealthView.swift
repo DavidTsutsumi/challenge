@@ -6,6 +6,7 @@
 
 import SwiftUI
 import MapKit
+import WebKit
 
 struct HealthView: View {
     var body: some View {
@@ -37,33 +38,34 @@ struct HealthView: View {
                     }
                     
                     // Ejemplo de noticia
-                    Link(destination: URL(string: "https://www.eluniversal.com.mx/metropoli/fotos-rios-de-aguas-negras-brotan-en-milpa-alta-en-riesgo-la-salud-de-mas-de-12-mil-personas/")!) {
-                        VStack(alignment: .leading) {
-                            Text("Residuos en la localidad")
-                                .font(.headline)
-                                .foregroundColor(.blue)
-                            Text("Una tubería de líquido residual colapsó y puede contaminar un pozo lo que pone en riesgo la salud de más de 12 mil habitantes")
-                                .font(.subheadline)
-                                .foregroundColor(.gray)
-                        }
-                        .padding()
-                        .background(Color.gray.opacity(0.1))
-                        .cornerRadius(8)
+                    VStack(alignment: .leading){
+                        
+                        Text("Residuos en la localidad")
+                            .font(.headline)
+                            .foregroundColor(.blue)
+                        
+                        WebView(url: URL(string: "https://www.eluniversal.com.mx/metropoli/fotos-rios-de-aguas-negras-brotan-en-milpa-alta-en-riesgo-la-salud-de-mas-de-12-mil-personas/")!)
+                            .frame(height: 300)
+                            .cornerRadius(8)
+                        
                     }
+                    .padding()
+                    .background(Color.gray.opacity(0.1))
+                    .cornerRadius(8)
                     
-                    Link(destination: URL(string: "https://www.otra-noticia.com")!) {
-                        VStack(alignment: .leading) {
-                            Text("Campaña de vacunación")
-                                .font(.headline)
-                                .foregroundColor(.blue)
-                            Text("Resumen de esta otra noticia...")
-                                .font(.subheadline)
-                                .foregroundColor(.gray)
-                        }
-                        .padding()
-                        .background(Color.gray.opacity(0.1))
-                        .cornerRadius(8)
+                    VStack(alignment: .leading){
+                        
+                        Text("Campaña de vacunación")
+                            .font(.headline)
+                            .foregroundColor(.blue)
+                        
+                        WebView(url: URL(string:"https://www.vertigopolitico.com/bienestar/notas/jornada-esterilizacion-y-vacunacion-para-mascotas-en-milpa-alta")!)
+                            .frame(height: 300)
+                            .cornerRadius(8)
                     }
+                    .padding()
+                    .background(Color.gray.opacity(0.1))
+                    .cornerRadius(8)
                 }
                 .padding(.horizontal)
                 
@@ -136,6 +138,8 @@ struct HealthMapView: View {
         }
         .frame(height: 300)
         .cornerRadius(10)
+        .padding()
+        
     }
 }
 
@@ -161,3 +165,18 @@ struct ContentView_Previews: PreviewProvider {
     }
 }
 
+struct WebView: UIViewRepresentable {
+    func updateUIView(_ uiView: WKWebView, context: Context) {
+        
+    }
+    
+    
+    let url: URL
+    
+    func makeUIView(context: Context) -> WKWebView {
+        let webView = WKWebView()
+        let request = URLRequest(url:url)
+        webView.load(request)
+        return webView
+    }
+}
