@@ -9,119 +9,126 @@ import MapKit
 import WebKit
 
 struct HealthView: View {
+    
     var body: some View {
-        ScrollView {
-            VStack(spacing: 20) {
-                // Sección de encabezado de la vista
-                VStack {
+        
+        NavigationView {
+        
+            ScrollView {
+                
+                VStack(spacing: 20) {
+                    // Sección de encabezado de la vista
+                    VStack {
+                        
+                        Spacer()
+                        Text("Salud")
+                            .font(.largeTitle)
+                            .foregroundColor(.gray)
+                        Text("Aqui encontrarás noticias, campañas y centros de salud de tu localidad")
+                            .font(.body)
+                            .padding()
+                    }
+                    
+                    // Apartado de Noticias de Salud
+                    VStack(alignment: .leading, spacing: 15) {
+                        
+                        HStack{
+                            Image("noticias")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 30, height: 30)
+                            Text("Noticias")
+                                .font(.title)
+                                .padding(.bottom, 5)
+                        }
+                        
+                        // Ejemplo de noticia
+                        VStack(alignment: .leading){
+                            
+                            Text("Residuos en la localidad")
+                                .font(.headline)
+                                .foregroundColor(.blue)
+                            
+                            WebView(url: URL(string: "https://www.eluniversal.com.mx/metropoli/fotos-rios-de-aguas-negras-brotan-en-milpa-alta-en-riesgo-la-salud-de-mas-de-12-mil-personas/")!)
+                                .frame(height: 300)
+                                .cornerRadius(8)
+                            
+                        }
+                        .padding()
+                        .background(Color.gray.opacity(0.1))
+                        .cornerRadius(8)
+                        
+                        VStack(alignment: .leading){
+                            
+                            Text("Campaña de vacunación")
+                                .font(.headline)
+                                .foregroundColor(.blue)
+                            
+                            WebView(url: URL(string:"https://www.vertigopolitico.com/bienestar/notas/jornada-esterilizacion-y-vacunacion-para-mascotas-en-milpa-alta")!)
+                                .frame(height: 300)
+                                .cornerRadius(8)
+                        }
+                        .padding()
+                        .background(Color.gray.opacity(0.1))
+                        .cornerRadius(8)
+                    }
+                    .padding(.horizontal)
+                    
+                    // Apartado de Primeros Auxilios
+                    VStack(alignment: .leading, spacing: 15) {
+                        
+                        HStack{
+                            Image("plantas")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 30, height: 30)
+                            Text("Plantas medicinales")
+                                .font(.title)
+                                .padding(.bottom, 5)
+                        }
+                        
+                        
+                        List(medicinalPlants){ plant in
+                            
+                            NavigationLink(destination: PlantDetailView(plant: plant)){
+                                
+                                HStack {
+                                    Image(plant.imageName)
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 50, height: 50)
+                                    Text(plant.name)
+                                        .font(.headline)
+                                }
+                            }
+                        }
+                        .frame(height: 300) // Para limitar el tamaño de la lista
+                    }
+                    .padding(.horizontal)
+                    
+                    // Apartado de Mapa de Centros de Salud Cercanos
+                    VStack(alignment: .leading, spacing: 15) {
+                        HStack{
+                            
+                            Image("centroS")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 30, height: 30)
+                            Text("Centros de Salud")
+                                .font(.title)
+                                .padding(.bottom, 5)
+                        }
+                        
+                        
+                        HealthMapView() // El mapa con centros de salud cercanos
+                    }
+                    .padding(.horizontal)
                     
                     Spacer()
-                    Text("Salud")
-                        .font(.largeTitle)
-                        .foregroundColor(.gray)
-                    Text("Aqui encontrarás noticias, campañas y centros de salud de tu localidad")
-                        .font(.body)
-                        .padding()
                 }
-                
-                // Apartado de Noticias de Salud
-                VStack(alignment: .leading, spacing: 15) {
-                    
-                    HStack{
-                        Image("noticias")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 30, height: 30)
-                        Text("Noticias")
-                            .font(.title)
-                            .padding(.bottom, 5)
-                    }
-                    
-                    // Ejemplo de noticia
-                    VStack(alignment: .leading){
-                        
-                        Text("Residuos en la localidad")
-                            .font(.headline)
-                            .foregroundColor(.blue)
-                        
-                        WebView(url: URL(string: "https://www.eluniversal.com.mx/metropoli/fotos-rios-de-aguas-negras-brotan-en-milpa-alta-en-riesgo-la-salud-de-mas-de-12-mil-personas/")!)
-                            .frame(height: 300)
-                            .cornerRadius(8)
-                        
-                    }
-                    .padding()
-                    .background(Color.gray.opacity(0.1))
-                    .cornerRadius(8)
-                    
-                    VStack(alignment: .leading){
-                        
-                        Text("Campaña de vacunación")
-                            .font(.headline)
-                            .foregroundColor(.blue)
-                        
-                        WebView(url: URL(string:"https://www.vertigopolitico.com/bienestar/notas/jornada-esterilizacion-y-vacunacion-para-mascotas-en-milpa-alta")!)
-                            .frame(height: 300)
-                            .cornerRadius(8)
-                    }
-                    .padding()
-                    .background(Color.gray.opacity(0.1))
-                    .cornerRadius(8)
-                }
-                .padding(.horizontal)
-                
-                // Apartado de Primeros Auxilios
-                VStack(alignment: .leading, spacing: 15) {
-                    
-                    HStack{
-                        Image("plantas")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 30, height: 30)
-                        Text("Plantas medicinales")
-                            .font(.title)
-                            .padding(.bottom, 5)
-                    }
-                    
-                    
-                    List {
-                        Section(header: Text("Árnica")) {
-                            Text("1. Alivia contusiones, esguinces y dolores mosuculares")
-                            Text("2. ...")
-                        }
-                        Section(header: Text("Sábila")) {
-                            Text("1. Tiene propiedades cicatrizantes y antiinflamatorias.")
-                            Text("2. ...")
-                        }
-                        Section(header: Text("Manzanilla")) {
-                            Text("1. Se usa comunmente como digestivo y alivio de cólicos.")
-                            Text("2. ...")
-                        }
-                    }
-                    .frame(height: 300) // Para limitar el tamaño de la lista
-                }
-                .padding(.horizontal)
-                
-                // Apartado de Mapa de Centros de Salud Cercanos
-                VStack(alignment: .leading, spacing: 15) {
-                    HStack{
-                        
-                        Image("centroS")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 30, height: 30)
-                        Text("Centros de Salud")
-                            .font(.title)
-                            .padding(.bottom, 5)
-                    }
-                    
-                    
-                    HealthMapView() // El mapa con centros de salud cercanos
-                }
-                .padding(.horizontal)
-
-                Spacer()
+                .padding()
             }
-            .padding()
+            .navigationTitle("En tu comunidad")
         }
     }
 }
@@ -161,7 +168,12 @@ let healthCenters = [
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        HealthView()
+        
+        NavigationView {
+            
+            HealthView()
+            
+        }
     }
 }
 
@@ -178,5 +190,64 @@ struct WebView: UIViewRepresentable {
         let request = URLRequest(url:url)
         webView.load(request)
         return webView
+    }
+}
+
+struct MedicinalPlant: Identifiable {
+    
+    let id = UUID()
+    let name: String
+    let imageName: String
+    let description: String
+    let recipe: String
+}
+
+let medicinalPlants = [
+    
+    MedicinalPlant(name:"Árnica", imageName: "arnica", description: "Los químicos activos en la árnica pueden reducir la hinchazón, disminuir el dolor y actuar como antibióticos. Pero la árnica puede ser peligrosa cuando se toma por vía oral, a menos que se use en diluciones homeopáticas.", recipe: "Pon una olla con dos litros de agua. Agrega lo que tomen tus dedos de árnica. Pon una tapa para conservar el calor. Déjala hervir a fuego medio. Luego de que hierva debes retirarla del fuego. Déjala reposar durante 10 minutos con la tapa puesta. Cuela el té al servirlo en una taza. Puedes endulzarlo al gusto con miel o azúcar y recuerda que tú puedes secar tu árnica para no usarla fresca. "),
+    MedicinalPlant(name:"Sábila", imageName: "sabila", description: "Alivia contusiones, esguinces y dolores", recipe: "Usar con "),
+    MedicinalPlant(name:"Manzanilla", imageName: "manzanilla", description: "Alivia contusiones, esguinces y dolores", recipe: "Usar con ")
+]
+
+struct PlantDetailView: View {
+    
+    let plant: MedicinalPlant
+    
+    var body: some View {
+        
+        ScrollView {
+            
+            VStack(spacing: 20){
+                
+                Image(plant.imageName)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 300)
+                    .clipped()
+                
+                Text(plant.name)
+                    .font(.largeTitle)
+                    .padding(.top)
+                
+                Text(plant.description)
+                    .font(.body)
+                    .padding()
+                
+                Text("Receta")
+                    .font(.headline)
+                    .padding(.top)
+                
+                Text(plant.recipe)
+                    .font(.body)
+                    .padding()
+                
+                Spacer()
+                
+            }
+            
+            .navigationTitle(plant.name)
+            .navigationBarTitleDisplayMode(.inline)
+        }
     }
 }
