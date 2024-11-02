@@ -74,7 +74,7 @@ struct HealthView: View {
                     }
                     .padding(.horizontal)
                     
-                    // Apartado de Primeros Auxilios
+                    // Apartado de Plantas medicinales
                     VStack(alignment: .leading, spacing: 15) {
                         
                         HStack{
