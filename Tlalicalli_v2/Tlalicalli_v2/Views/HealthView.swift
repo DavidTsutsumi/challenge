@@ -139,22 +139,48 @@ struct HealthMapView: View {
         span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
     )
     
+    @State private var selectedCenter: HealthCenter? = nil
+    @State private var showingDetail = false
+    
     var body: some View {
+        
         Map(coordinateRegion: $region, annotationItems: healthCenters) { center in
-            MapMarker(coordinate: center.location, tint: .red)
+            
+            MapAnnotation(coordinate: center.location){
+                
+                Button(action: {
+                    
+                    selectedCenter = center
+                    showingDetail = true
+                    
+                }){
+                    
+                    Image(systemName: "mappin.circle.fill")
+                        .foregroundColor(.red)
+                        .font(.title)
+                    
+                }
+            }
         }
         .frame(height: 300)
         .cornerRadius(10)
         .padding()
+        .sheet(item: $selectedCenter){ center in
+            HealthCenterDetailView(center: center)
+        }
         
     }
 }
 
 // Centros de salud cercanos
 struct HealthCenter: Identifiable {
+    
     let id = UUID()
     let name: String
+    let imageName: String
+    let description: String
     let location: CLLocationCoordinate2D
+    
 }
 
 /*Coordenadas
@@ -162,8 +188,17 @@ struct HealthCenter: Identifiable {
  Hospital General: 19.20159061309685, -99.01056083756816
 */
 let healthCenters = [
-    HealthCenter(name: "Centro de Salud Salud San Lorenzo Tlacoyucan", location: CLLocationCoordinate2D(latitude: 19.179109540913146, longitude: -99.02369245713565)),
-    HealthCenter(name: "Hospital General Milpa Alta", location: CLLocationCoordinate2D(latitude: 19.20159061309685, longitude: -99.01056083756816))
+    HealthCenter(
+        name: "Centro de Salud Salud San Lorenzo Tlacoyucan",
+        imageName: "centro_salud_image",
+        description: "Proporciona servicios de atención primaria y vacunación.",
+        location: CLLocationCoordinate2D(latitude: 19.179109540913146, longitude: -99.02369245713565)),
+    
+    HealthCenter(
+        name: "Hospital General Milpa Alta",
+        imageName: "hospital_general_image",
+        description: "Hospital...",
+        location: CLLocationCoordinate2D(latitude: 19.20159061309685, longitude: -99.01056083756816))
 ]
 
 struct ContentView_Previews: PreviewProvider {
@@ -248,6 +283,59 @@ struct PlantDetailView: View {
             
             .navigationTitle(plant.name)
             .navigationBarTitleDisplayMode(.inline)
+        }
+    }
+}
+
+struct HealthCenterDetailView: View {
+    let center: HealthCenter
+
+    var body: some View {
+        ScrollView {
+            VStack(spacing: 20) {
+                Image(center.imageName)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 300)
+                    .clipped()
+
+                Text(center.name)
+                    .font(.largeTitle)
+                    .padding(.top)
+
+                Text(center.description)
+                    .font(.body)
+                    .padding()
+                
+                //Boton indicaciones
+                Button(action: {
+                    
+                    openMaps(for: center.location)
+                    
+                }){
+                    Text("Obtener indicaciones")
+                        .font(.headline)
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                }
+                
+
+                Spacer()
+            }
+            .padding()
+        }
+        .navigationTitle(center.name)
+        .navigationBarTitleDisplayMode(.inline)
+    }
+    
+    private func openMaps(for location: CLLocationCoordinate2D){
+        let url = URL(string: "http://maps.apple.com/?daddr=\(location.latitude),\(location.longitude)")!
+        if UIApplication.shared.canOpenURL(url){
+            UIApplication.shared.open(url)
         }
     }
 }
