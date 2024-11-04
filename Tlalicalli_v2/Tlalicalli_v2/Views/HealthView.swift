@@ -33,6 +33,7 @@ struct HealthView: View {
                     VStack(alignment: .leading, spacing: 15) {
                         
                         HStack{
+                            
                             Image("noticias")
                                 .resizable()
                                 .scaledToFit()
@@ -41,43 +42,28 @@ struct HealthView: View {
                                 .font(.title)
                                 .padding(.bottom, 5)
                         }
-                        
-                        // Ejemplo de noticia
-                        VStack(alignment: .leading){
-                            
-                            Text("Residuos en la localidad")
-                                .font(.headline)
-                                .foregroundColor(.blue)
-                            
-                            WebView(url: URL(string: "https://www.eluniversal.com.mx/metropoli/fotos-rios-de-aguas-negras-brotan-en-milpa-alta-en-riesgo-la-salud-de-mas-de-12-mil-personas/")!)
-                                .frame(height: 300)
-                                .cornerRadius(8)
-                            
-                        }
-                        .padding()
-                        .background(Color.gray.opacity(0.1))
-                        .cornerRadius(8)
-                        
-                        VStack(alignment: .leading){
-                            
-                            Text("Campaña de vacunación")
-                                .font(.headline)
-                                .foregroundColor(.blue)
-                            
-                            WebView(url: URL(string:"https://www.vertigopolitico.com/bienestar/notas/jornada-esterilizacion-y-vacunacion-para-mascotas-en-milpa-alta")!)
-                                .frame(height: 300)
-                                .cornerRadius(8)
-                        }
-                        .padding()
-                        .background(Color.gray.opacity(0.1))
-                        .cornerRadius(8)
+                                                
+                        NewsView(
+                            title: "Residuos en la localidad",
+                            url: URL(string: "https://www.eluniversal.com.mx/metropoli/fotos-rios-de-aguas-negras-brotan-en-milpa-alta-en-riesgo-la-salud-de-mas-de-12-mil-personas/")!,
+                            backgroundColor: Color(.systemGray6)
+                        )
+
+                        NewsView(
+                            title: "Campaña de vacunación",
+                            url: URL(string: "https://www.vertigopolitico.com/bienestar/notas/jornada-esterilizacion-y-vacunacion-para-mascotas-en-milpa-alta")!,
+                            backgroundColor: Color(.systemGray6)
+                        )
                     }
                     .padding(.horizontal)
+
+                    Spacer()
                     
                     // Apartado de Plantas medicinales
                     VStack(alignment: .leading, spacing: 15) {
                         
                         HStack{
+                            
                             Image("plantas")
                                 .resizable()
                                 .scaledToFit()
@@ -87,22 +73,28 @@ struct HealthView: View {
                                 .padding(.bottom, 5)
                         }
                         
-                        
-                        List(medicinalPlants){ plant in
-                            
-                            NavigationLink(destination: PlantDetailView(plant: plant)){
+                        VStack {
+                            List(medicinalPlants){ plant in
                                 
-                                HStack {
-                                    Image(plant.imageName)
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 50, height: 50)
-                                    Text(plant.name)
-                                        .font(.headline)
+                                NavigationLink(destination: PlantDetailView(plant: plant)){
+                                    
+                                    HStack {
+                                        
+                                        Image(plant.imageName)
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 50, height: 50)
+                                        Text(plant.name)
+                                            .font(.headline)
+                                    }
                                 }
                             }
+                            .frame(height: 300)
+                            .cornerRadius(10)
                         }
-                        .frame(height: 300) // Para limitar el tamaño de la lista
+                        .background(Color.white)
+                        .cornerRadius(12)
+                        .shadow(color: .gray.opacity(0.4), radius: 5, x: 0, y: 4)
                     }
                     .padding(.horizontal)
                     
@@ -133,73 +125,6 @@ struct HealthView: View {
     }
 }
 
-struct HealthMapView: View {
-    @State private var region = MKCoordinateRegion(
-        center: CLLocationCoordinate2D(latitude: 19.179109540913146, longitude: -99.02369245713565), // Coordenadas del centro
-        span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
-    )
-    
-    @State private var selectedCenter: HealthCenter? = nil
-    @State private var showingDetail = false
-    
-    var body: some View {
-        
-        Map(coordinateRegion: $region, annotationItems: healthCenters) { center in
-            
-            MapAnnotation(coordinate: center.location){
-                
-                Button(action: {
-                    
-                    selectedCenter = center
-                    showingDetail = true
-                    
-                }){
-                    
-                    Image(systemName: "mappin.circle.fill")
-                        .foregroundColor(.red)
-                        .font(.title)
-                    
-                }
-            }
-        }
-        .frame(height: 300)
-        .cornerRadius(10)
-        .padding()
-        .sheet(item: $selectedCenter){ center in
-            HealthCenterDetailView(center: center)
-        }
-        
-    }
-}
-
-// Centros de salud cercanos
-struct HealthCenter: Identifiable {
-    
-    let id = UUID()
-    let name: String
-    let imageName: String
-    let description: String
-    let location: CLLocationCoordinate2D
-    
-}
-
-/*Coordenadas
- Centro de salud Salud San Lorenzo Tlacoyucan: 19.179109540913146, -99.02369245713565
- Hospital General: 19.20159061309685, -99.01056083756816
-*/
-let healthCenters = [
-    HealthCenter(
-        name: "Centro de Salud Salud San Lorenzo Tlacoyucan",
-        imageName: "centro_salud_image",
-        description: "Proporciona servicios de atención primaria y vacunación.",
-        location: CLLocationCoordinate2D(latitude: 19.179109540913146, longitude: -99.02369245713565)),
-    
-    HealthCenter(
-        name: "Hospital General Milpa Alta",
-        imageName: "hospital_general_image",
-        description: "Hospital...",
-        location: CLLocationCoordinate2D(latitude: 19.20159061309685, longitude: -99.01056083756816))
-]
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
@@ -213,18 +138,44 @@ struct ContentView_Previews: PreviewProvider {
 }
 
 struct WebView: UIViewRepresentable {
+    
     func updateUIView(_ uiView: WKWebView, context: Context) {
         
     }
     
-    
     let url: URL
     
     func makeUIView(context: Context) -> WKWebView {
+        
         let webView = WKWebView()
         let request = URLRequest(url:url)
         webView.load(request)
         return webView
+    }
+}
+
+struct NewsView: View {
+    
+    let title: String
+    let url: URL
+    let backgroundColor: Color
+
+    var body: some View {
+        VStack(alignment: .leading) {
+            Text(title)
+                .font(.headline)
+                .foregroundColor(.blue)
+                .padding(.bottom, 5)
+
+            WebView(url: url)
+                .frame(height: 300)
+                .cornerRadius(10)
+
+        }
+        .padding()
+        .background(backgroundColor)
+        .cornerRadius(12)
+        .shadow(color: .gray.opacity(0.4), radius: 5, x: 0, y: 4)
     }
 }
 
@@ -236,13 +187,6 @@ struct MedicinalPlant: Identifiable {
     let description: String
     let recipe: String
 }
-
-let medicinalPlants = [
-    
-    MedicinalPlant(name:"Árnica", imageName: "arnica", description: "Los químicos activos en la árnica pueden reducir la hinchazón, disminuir el dolor y actuar como antibióticos. Pero la árnica puede ser peligrosa cuando se toma por vía oral, a menos que se use en diluciones homeopáticas.", recipe: "Pon una olla con dos litros de agua. Agrega lo que tomen tus dedos de árnica. Pon una tapa para conservar el calor. Déjala hervir a fuego medio. Luego de que hierva debes retirarla del fuego. Déjala reposar durante 10 minutos con la tapa puesta. Cuela el té al servirlo en una taza. Puedes endulzarlo al gusto con miel o azúcar y recuerda que tú puedes secar tu árnica para no usarla fresca. "),
-    MedicinalPlant(name:"Sábila", imageName: "sabila", description: "Alivia contusiones, esguinces y dolores", recipe: "Usar con "),
-    MedicinalPlant(name:"Manzanilla", imageName: "manzanilla", description: "Alivia contusiones, esguinces y dolores", recipe: "Usar con ")
-]
 
 struct PlantDetailView: View {
     
@@ -287,22 +231,48 @@ struct PlantDetailView: View {
     }
 }
 
+let medicinalPlants = [
+    
+    MedicinalPlant(
+        name:"Árnica",
+        imageName: "arnica",
+        description: "Los químicos activos en la árnica pueden reducir la hinchazón, disminuir el dolor y actuar como antibióticos. Pero la árnica puede ser peligrosa cuando se toma por vía oral, a menos que se use en diluciones homeopáticas.",
+        recipe: "Pon una olla con dos litros de agua. Agrega lo que tomen tus dedos de árnica. Pon una tapa para conservar el calor. Déjala hervir a fuego medio. Luego de que hierva debes retirarla del fuego. Déjala reposar durante 10 minutos con la tapa puesta. Cuela el té al servirlo en una taza. Puedes endulzarlo al gusto con miel o azúcar y recuerda que tú puedes secar tu árnica para no usarla fresca. "),
+    
+    MedicinalPlant(
+        name:"Sábila",
+        imageName: "sabila",
+        description: "Alivia contusiones, esguinces y dolores",
+        recipe: "Usar con "),
+    
+    MedicinalPlant(
+        name:"Manzanilla",
+        imageName: "manzanilla",
+        description: "Alivia contusiones, esguinces y dolores",
+        recipe: "Usar con ")
+]
+
 struct HealthCenterDetailView: View {
     let center: HealthCenter
 
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
+                
+                Text(center.name)
+                    .font(.largeTitle)
+                    .padding(.top)
+                
                 Image(center.imageName)
                     .resizable()
                     .scaledToFit()
                     .frame(maxWidth: .infinity)
                     .frame(height: 300)
                     .clipped()
-
-                Text(center.name)
-                    .font(.largeTitle)
-                    .padding(.top)
+                
+                Text(center.title)
+                    .font(.title3)
+                    .frame(maxWidth: .infinity, alignment: .leading)
 
                 Text(center.description)
                     .font(.body)
@@ -333,9 +303,83 @@ struct HealthCenterDetailView: View {
     }
     
     private func openMaps(for location: CLLocationCoordinate2D){
+        
         let url = URL(string: "http://maps.apple.com/?daddr=\(location.latitude),\(location.longitude)")!
         if UIApplication.shared.canOpenURL(url){
             UIApplication.shared.open(url)
         }
     }
 }
+
+struct HealthMapView: View {
+    
+    @State private var region = MKCoordinateRegion(
+        center: CLLocationCoordinate2D(latitude: 19.179109540913146, longitude: -99.02369245713565), // Coordenadas del centro
+        span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
+    )
+    
+    @State private var selectedCenter: HealthCenter? = nil
+    @State private var showingDetail = false
+    
+    var body: some View {
+        
+        Map(coordinateRegion: $region, annotationItems: healthCenters) { center in
+            
+            MapAnnotation(coordinate: center.location){
+                
+                Button(action: {
+                    
+                    selectedCenter = center
+                    showingDetail = true
+                    
+                }){
+                    
+                    Image(systemName: "mappin")
+                        .foregroundColor(.red)
+                        .font(.title)
+                    
+                }
+            }
+        }
+        .frame(height: 300)
+        .cornerRadius(10)
+        .padding()
+        .sheet(item: $selectedCenter){ center in
+            HealthCenterDetailView(center: center)
+        }
+        
+    }
+}
+
+// Centros de salud cercanos
+struct HealthCenter: Identifiable {
+    
+    let id = UUID()
+    let name: String
+    let imageName: String
+    let title: String
+    let description: String
+    let location: CLLocationCoordinate2D
+    
+}
+
+/*Coordenadas
+ Centro de salud Salud San Lorenzo Tlacoyucan: 19.179109540913146, -99.02369245713565
+ Hospital General: 19.20159061309685, -99.01056083756816
+*/
+let healthCenters = [
+    
+    HealthCenter(
+        name: "Centro de Salud Salud San Lorenzo Tlacoyucan",
+        imageName: "centro_salud_image",
+        title: "Este complejo ofrece:",
+        description: "Proporciona servicios de atención primaria y vacunación.",
+        location: CLLocationCoordinate2D(latitude: 19.179109540913146, longitude: -99.02369245713565)),
+    
+    HealthCenter(
+        name: "Hospital General Milpa Alta",
+        imageName: "hospital_general_image",
+        title: "Este complejo ofrece:",
+        description: "Hospital...",
+        location: CLLocationCoordinate2D(latitude: 19.20159061309685, longitude: -99.01056083756816))
+]
