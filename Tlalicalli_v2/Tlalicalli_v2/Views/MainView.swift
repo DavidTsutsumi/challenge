@@ -1,35 +1,49 @@
 import SwiftUI
 
 struct MainView: View {
+    @StateObject private var favoritesManager = FavoritesManager()
+
     var body: some View {
         TabView {
             ContentView()
                 .tabItem {
-                    Image("mapa")
-                        .resizable()
-                        .frame(width: 5, height: 5)
-                    Text("Mapa")
+                    VStack {
+                        Image("mapa")
+                            .resizable()
+                            .frame(width: 24, height: 24) // Tamaño adecuado para el icono
+                        Text("Mapa")
+                    }
                 }
+
             LearnView()
                 .tabItem {
-                    Image("aprende")
-                        .resizable()
-                        .frame(width: 5, height: 5)
-                    Text("Aprende")
+                    VStack {
+                        Image("aprende")
+                            .resizable()
+                            .frame(width: 24, height: 24)
+                        Text("Aprende")
+                    }
                 }
+                .environmentObject(favoritesManager) // Inyecta FavoritesManager en LearnView
+
             RecyView()
                 .tabItem {
-                    Image("reciclaje")
-                        .resizable()
-                        .frame(width: 5, height: 5)
-                    Text("Reciclaje")
+                    VStack {
+                        Image("reciclaje")
+                            .resizable()
+                            .frame(width: 24, height: 24)
+                        Text("Reciclaje")
+                    }
                 }
+
             HealthView()
                 .tabItem {
-                    Image("salud")
-                        .resizable()
-                        .frame(width: 5, height: 5)
-                    Text("Salud")
+                    VStack {
+                        Image("salud")
+                            .resizable()
+                            .frame(width: 24, height: 24)
+                        Text("Salud")
+                    }
                 }
         }
         .accentColor(.blue)

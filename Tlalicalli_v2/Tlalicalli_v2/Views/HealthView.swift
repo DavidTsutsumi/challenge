@@ -4,6 +4,7 @@
 //  Created by Facultad de Contaduría y Administración on 17/10/24.
 //
 
+
 import SwiftUI
 import MapKit
 import WebKit
@@ -11,7 +12,7 @@ import WebKit
 struct HealthView: View {
     
     var body: some View {
-        
+
         NavigationView {
         
             ScrollView {
@@ -72,6 +73,7 @@ struct HealthView: View {
                                 .font(.title)
                                 .padding(.bottom, 5)
                         }
+
                         
                         VStack {
                             List(medicinalPlants){ plant in
@@ -98,6 +100,7 @@ struct HealthView: View {
                     }
                     .padding(.horizontal)
                     
+
                     // Apartado de Mapa de Centros de Salud Cercanos
                     VStack(alignment: .leading, spacing: 15) {
                         HStack{
@@ -314,7 +317,7 @@ struct HealthCenterDetailView: View {
 struct HealthMapView: View {
     
     @State private var region = MKCoordinateRegion(
-        center: CLLocationCoordinate2D(latitude: 19.179109540913146, longitude: -99.02369245713565), // Coordenadas del centro
+        center: CLLocationCoordinate2D(latitude: 19.179109540913146, longitude: -99.02369245713565),
         span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
     )
     
@@ -351,7 +354,7 @@ struct HealthMapView: View {
     }
 }
 
-// Centros de salud cercanos
+// Modelo de Centro de Salud
 struct HealthCenter: Identifiable {
     
     let id = UUID()
@@ -362,6 +365,7 @@ struct HealthCenter: Identifiable {
     let location: CLLocationCoordinate2D
     
 }
+
 
 let healthCenters = [
     
