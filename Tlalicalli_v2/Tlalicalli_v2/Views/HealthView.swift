@@ -4,6 +4,7 @@
 //  Created by Facultad de Contaduría y Administración on 17/10/24.
 //
 
+
 import SwiftUI
 import MapKit
 
@@ -13,20 +14,18 @@ struct HealthView: View {
             VStack(spacing: 20) {
                 // Sección de encabezado de la vista
                 VStack {
-                    
                     Spacer()
                     Text("Salud")
                         .font(.largeTitle)
                         .foregroundColor(.gray)
-                    Text("Aqui encontrarás noticias, campañas y centros de salud de tu localidad")
+                    Text("Aquí encontrarás noticias, campañas y centros de salud de tu localidad")
                         .font(.body)
                         .padding()
                 }
                 
                 // Apartado de Noticias de Salud
                 VStack(alignment: .leading, spacing: 15) {
-                    
-                    HStack{
+                    HStack {
                         Image("noticias")
                             .resizable()
                             .scaledToFit()
@@ -67,10 +66,9 @@ struct HealthView: View {
                 }
                 .padding(.horizontal)
                 
-                // Apartado de Primeros Auxilios
+                // Apartado de Plantas Medicinales
                 VStack(alignment: .leading, spacing: 15) {
-                    
-                    HStack{
+                    HStack {
                         Image("plantas")
                             .resizable()
                             .scaledToFit()
@@ -80,29 +78,47 @@ struct HealthView: View {
                             .padding(.bottom, 5)
                     }
                     
-                    
-                    List {
-                        Section(header: Text("Árnica")) {
-                            Text("1. Alivia contusiones, esguinces y dolores mosuculares")
-                            Text("2. ...")
+                    // Usamos LazyVStack en lugar de List, para evitar conflictos con ScrollView
+                    LazyVStack(alignment: .leading, spacing: 10) {
+                        VStack(alignment: .leading, spacing: 5) {
+                            Text("Árnica")
+                                .font(.headline)
+                                .padding(.bottom, 2)
+                            Text("1. Alivia contusiones, esguinces y dolores musculares")
+                            Text("2. Usada en cremas y ungüentos para aliviar el dolor.")
                         }
-                        Section(header: Text("Sábila")) {
+                        .padding()
+                        .background(Color.gray.opacity(0.1))
+                        .cornerRadius(8)
+                        
+                        VStack(alignment: .leading, spacing: 5) {
+                            Text("Sábila")
+                                .font(.headline)
+                                .padding(.bottom, 2)
                             Text("1. Tiene propiedades cicatrizantes y antiinflamatorias.")
-                            Text("2. ...")
+                            Text("2. Utilizada en tratamientos para quemaduras menores.")
                         }
-                        Section(header: Text("Manzanilla")) {
-                            Text("1. Se usa comunmente como digestivo y alivio de cólicos.")
-                            Text("2. ...")
+                        .padding()
+                        .background(Color.gray.opacity(0.1))
+                        .cornerRadius(8)
+                        
+                        VStack(alignment: .leading, spacing: 5) {
+                            Text("Manzanilla")
+                                .font(.headline)
+                                .padding(.bottom, 2)
+                            Text("1. Se usa comúnmente como digestivo y para aliviar cólicos.")
+                            Text("2. Conocida por sus propiedades calmantes.")
                         }
+                        .padding()
+                        .background(Color.gray.opacity(0.1))
+                        .cornerRadius(8)
                     }
-                    .frame(height: 300) // Para limitar el tamaño de la lista
                 }
                 .padding(.horizontal)
                 
                 // Apartado de Mapa de Centros de Salud Cercanos
                 VStack(alignment: .leading, spacing: 15) {
-                    HStack{
-                        
+                    HStack {
                         Image("centroS")
                             .resizable()
                             .scaledToFit()
@@ -112,11 +128,11 @@ struct HealthView: View {
                             .padding(.bottom, 5)
                     }
                     
-                    
-                    HealthMapView() // El mapa con centros de salud cercanos
+                    // Mapa de Centros de Salud
+                    HealthMapView()
                 }
                 .padding(.horizontal)
-
+                
                 Spacer()
             }
             .padding()
@@ -126,7 +142,7 @@ struct HealthView: View {
 
 struct HealthMapView: View {
     @State private var region = MKCoordinateRegion(
-        center: CLLocationCoordinate2D(latitude: 19.179109540913146, longitude: -99.02369245713565), // Coordenadas del centro
+        center: CLLocationCoordinate2D(latitude: 19.179109540913146, longitude: -99.02369245713565),
         span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
     )
     
@@ -139,25 +155,15 @@ struct HealthMapView: View {
     }
 }
 
-// Centros de salud cercanos
+// Modelo de Centro de Salud
 struct HealthCenter: Identifiable {
     let id = UUID()
     let name: String
     let location: CLLocationCoordinate2D
 }
 
-/*Coordenadas
- Centro de salud Salud San Lorenzo Tlacoyucan: 19.179109540913146, -99.02369245713565
- Hospital General: 19.20159061309685, -99.01056083756816
-*/
+// Lista de Centros de Salud Cercanos
 let healthCenters = [
     HealthCenter(name: "Centro de Salud Salud San Lorenzo Tlacoyucan", location: CLLocationCoordinate2D(latitude: 19.179109540913146, longitude: -99.02369245713565)),
     HealthCenter(name: "Hospital General Milpa Alta", location: CLLocationCoordinate2D(latitude: 19.20159061309685, longitude: -99.01056083756816))
 ]
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        HealthView()
-    }
-}
-
