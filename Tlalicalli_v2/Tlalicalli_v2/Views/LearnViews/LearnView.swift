@@ -20,7 +20,7 @@ struct LearnView: View {
                     .foregroundColor(.green)
                     .padding(.horizontal)
                 
-                Text("Aquí encontrarás información importante sobre el cuidado ambiental en zonas rurales de México, como Milpa Alta.")
+                Text("Aquí encontrarás información importante sobre el cuidado ambiental en zonas rurales de México.")
                     .font(.custom("HelveticaNeue", size: 16))
                     .multilineTextAlignment(.center)
                     .padding(.horizontal)
