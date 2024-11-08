@@ -20,7 +20,8 @@ struct FavoritesView: View {
                         .italic()
                 } else {
                     ForEach(favoritesManager.favorites) { section in
-                        SectionView(section: section) // Cada sección manejará su propio estado de expansión
+                        // Pasamos `isFavoriteView: true` para evitar que se eliminen los favoritos
+                        SectionView(section: section, isFavoriteView: true)
                             .environmentObject(favoritesManager)
                     }
                 }
