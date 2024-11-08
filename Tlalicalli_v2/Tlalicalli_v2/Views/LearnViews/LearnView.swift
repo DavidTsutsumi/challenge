@@ -14,10 +14,11 @@ struct LearnView: View {
 
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading) {
+            VStack(alignment: .center) { // Cambia a .center para centrar el contenido dentro del VStack
                 Text("Aprende sobre el Cuidado Ambiental")
                     .font(.largeTitle)
-                    .foregroundColor(.green)
+                    .foregroundColor(.blue)
+                    .frame(maxWidth: .infinity, alignment: .center) // Asegura que el título esté centrado horizontalmente
                     .padding(.horizontal)
                 
                 Text("Aquí encontrarás información importante sobre el cuidado ambiental en zonas rurales de México.")

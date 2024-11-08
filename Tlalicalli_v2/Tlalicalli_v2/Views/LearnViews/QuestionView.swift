@@ -8,17 +8,15 @@
 import SwiftUI
 
 struct QuestionView: View {
-    @State private var selectedOption: String? // Estado para la opción seleccionada
     let question: Question
+    @Binding var selectedOption: String? // Vincula la selección al estado en SectionView
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            // Pregunta
             Text(question.text)
                 .font(.subheadline)
                 .foregroundColor(.black)
             
-            // Opciones de respuesta
             ForEach(question.options, id: \.self) { option in
                 Button(action: {
                     selectedOption = option // Actualiza la opción seleccionada
@@ -27,7 +25,6 @@ struct QuestionView: View {
                         Text(option)
                             .foregroundColor(.black)
                         Spacer()
-                        // Indicador de selección y de corrección
                         if let selected = selectedOption {
                             if selected == option {
                                 Image(systemName: selected == question.correctAnswer ? "checkmark.circle.fill" : "xmark.circle.fill")
@@ -48,7 +45,6 @@ struct QuestionView: View {
                 .buttonStyle(PlainButtonStyle())
             }
             
-            // Mensaje de retroalimentación
             if let selected = selectedOption {
                 Text(selected == question.correctAnswer ? "¡Correcto!" : "Incorrecto. Intenta de nuevo.")
                     .font(.footnote)
@@ -57,8 +53,5 @@ struct QuestionView: View {
             }
         }
         .padding(.vertical, 5)
-        .onAppear {
-            selectedOption = question.selectedOption // Muestra la selección si ya existía
-        }
     }
 }

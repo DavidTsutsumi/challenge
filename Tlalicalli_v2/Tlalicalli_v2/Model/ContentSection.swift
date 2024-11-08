@@ -13,5 +13,8 @@ struct ContentSection: Identifiable, Equatable {
     var imageName: String
     var content: String
     var backgroundColor: Color
-    var questions: [Question] // Lista de preguntas de opción múltiple
+    var icon: String // Nombre del símbolo SF Symbols
+    var iconBackgroundColor: Color // Color de fondo del icono
+    var questions: [Question]
+    var link: URL? // URL opcional para redireccionar a la noticia o video
 }
