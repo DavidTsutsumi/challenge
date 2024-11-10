@@ -12,6 +12,8 @@ import WebKit
 struct HealthView: View {
     
     @State private var showInfoAlert = false
+    @ObservedObject var viewModel = MedicinalPlantViewModel()
+    var healthCenters: [HealthCenter]
     
     var body: some View {
 
@@ -95,38 +97,11 @@ struct HealthView: View {
                             }
                             
                         }
-
                         
-                        ForEach(medicinalPlants) { plant in
+                        ForEach(viewModel.medicinalPlants) { plant in
                                 NavigationLink(destination: PlantDetailView(plant: plant)) {
-                                    HStack {
-                                        Image(plant.imageName)
-                                            .resizable()
-                                            .scaledToFill()
-                                            .frame(width: 70, height: 70)
-                                            .clipShape(RoundedRectangle(cornerRadius: 10))
-                                            .overlay(
-                                                RoundedRectangle(cornerRadius: 10)
-                                                    .stroke(Color.gray.opacity(0.5), lineWidth: 1)
-                                            )
-                                        
-                                        VStack(alignment: .leading, spacing: 5) {
-                                            Text(plant.name)
-                                                .font(.headline)
-                                                .foregroundColor(.primary)
-                                            Text(plant.description)
-                                                .font(.subheadline)
-                                                .foregroundColor(.secondary)
-                                                .lineLimit(2)
-                                        }
-                                        .padding(.leading, 5)
-                                        
-                                        Spacer()
-                                    }
-                                    .padding()
-                                    .background(Color(.systemGray6))
-                                    .cornerRadius(12)
-                                    .shadow(color: .gray.opacity(0.2), radius: 5, x: 0, y: 4)
+                                    
+                                        MedicinalPlantRow(plant: plant)
                                 }
                             }
                             .padding(.vertical, 5)
@@ -148,7 +123,7 @@ struct HealthView: View {
                         }
                         
                         
-                        HealthMapView() // El mapa con centros de salud cercanos
+                        HealthMapView(healthCenters: healthCenters) // El mapa con centros de salud cercanos
                     }
                     .padding(.horizontal)
                     
@@ -164,10 +139,11 @@ struct HealthView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
+        let healthCenterViewModel = HealthCenterViewModel()
         
         NavigationView {
             
-            HealthView()
+            HealthView(healthCenters: healthCenterViewModel.healthCenters)
             
         }
     }
@@ -226,7 +202,7 @@ struct NewsView: View {
     }
 }
 
-struct MedicinalPlant: Identifiable {
+/*struct MedicinalPlant: Identifiable {
     
     let id = UUID()
     let name: String
@@ -234,9 +210,9 @@ struct MedicinalPlant: Identifiable {
     let description: String
     let recipeSteps: [String]
     let finalImageName: String?
-}
+}*/
 
-
+/*
 struct PlantDetailView: View {
     
     let plant: MedicinalPlant
@@ -332,12 +308,12 @@ struct PlantDetailView: View {
         }
     }
 }
+*/
 
 
 
 
-
-let medicinalPlants = [
+/*let medicinalPlants = [
     
     MedicinalPlant(
         name:"Árnica",
@@ -378,7 +354,9 @@ let medicinalPlants = [
                     "Cuela el té al servirlo y endulza al gusto."],
         finalImageName: "arnica_tea")
 ]
+*/
 
+/*
 struct HealthCenterDetailView: View {
     let center: HealthCenter
 
@@ -437,7 +415,9 @@ struct HealthCenterDetailView: View {
         }
     }
 }
+*/
 
+/*
 struct HealthMapView: View {
     
     @State private var region = MKCoordinateRegion(
@@ -477,7 +457,10 @@ struct HealthMapView: View {
         
     }
 }
+*/
 
+
+/*
 // Modelo de Centro de Salud
 struct HealthCenter: Identifiable {
     
@@ -488,9 +471,9 @@ struct HealthCenter: Identifiable {
     let description: String
     let location: CLLocationCoordinate2D
     
-}
+}*/
 
-
+/*
 let healthCenters = [
     
     HealthCenter(
@@ -513,4 +496,4 @@ let healthCenters = [
         title: "Este complejo ofrece:",
         description: "CONSULTA MEDICA, ODONTOLOGICAY PSICOLOGICA, RAYOS X, LABORATORIO CLINICO, INMUNIZACIONES, FARMACIA, DETECCIONES, PRUEBAS DE DETCCCION DE COVID - 19, TRABAJO SOCIAL, TAMIZ NEONATAL (SERVICIO FINES DE SEMANA Y DÍAS FESTIVOS: CONSULTA DE MEDICINA GENERAL Y ODONTOLOGICA, INMUNIZACIONES Y DETECCIONES).",
         location: CLLocationCoordinate2D(latitude: 19.197271987102017, longitude: -99.01698101480211))
-]
+]*/

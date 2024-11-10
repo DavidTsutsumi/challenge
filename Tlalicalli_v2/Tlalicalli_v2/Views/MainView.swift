@@ -2,7 +2,8 @@ import SwiftUI
 
 struct MainView: View {
     @StateObject private var favoritesManager = FavoritesManager()
-
+    @StateObject private var healthCenterViewModel = HealthCenterViewModel()
+    
     var body: some View {
         TabView {
             ContentView()
@@ -36,7 +37,7 @@ struct MainView: View {
                     }
                 }
 
-            HealthView()
+            HealthView(healthCenters: healthCenterViewModel.healthCenters)
                 .tabItem {
                     VStack {
                         Image("salud")
