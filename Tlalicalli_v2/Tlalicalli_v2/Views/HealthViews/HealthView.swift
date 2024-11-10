@@ -97,29 +97,40 @@ struct HealthView: View {
                         }
 
                         
-                        VStack {
-                            List(medicinalPlants){ plant in
-                                
-                                NavigationLink(destination: PlantDetailView(plant: plant)){
-                                    
+                        ForEach(medicinalPlants) { plant in
+                                NavigationLink(destination: PlantDetailView(plant: plant)) {
                                     HStack {
-                                        
                                         Image(plant.imageName)
                                             .resizable()
-                                            .scaledToFit()
-                                            .frame(width: 50, height: 50)
-                                        Text(plant.name)
-                                            .font(.headline)
+                                            .scaledToFill()
+                                            .frame(width: 70, height: 70)
+                                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                                            .overlay(
+                                                RoundedRectangle(cornerRadius: 10)
+                                                    .stroke(Color.gray.opacity(0.5), lineWidth: 1)
+                                            )
+                                        
+                                        VStack(alignment: .leading, spacing: 5) {
+                                            Text(plant.name)
+                                                .font(.headline)
+                                                .foregroundColor(.primary)
+                                            Text(plant.description)
+                                                .font(.subheadline)
+                                                .foregroundColor(.secondary)
+                                                .lineLimit(2)
+                                        }
+                                        .padding(.leading, 5)
+                                        
+                                        Spacer()
                                     }
+                                    .padding()
+                                    .background(Color(.systemGray6))
+                                    .cornerRadius(12)
+                                    .shadow(color: .gray.opacity(0.2), radius: 5, x: 0, y: 4)
                                 }
                             }
-                            .frame(height: 300)
-                            .cornerRadius(10)
+                            .padding(.vertical, 5)
                         }
-                        .background(Color.white)
-                        .cornerRadius(12)
-                        .shadow(color: .gray.opacity(0.4), radius: 5, x: 0, y: 4)
-                    }
                     .padding(.horizontal)
                     
 
@@ -195,6 +206,17 @@ struct NewsView: View {
             WebView(url: url)
                 .frame(height: 300)
                 .cornerRadius(10)
+            
+            Link(destination: url){
+                Text("Ver más")
+                    .font(.subheadline)
+                    .foregroundColor(.blue)
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 5)
+                    .background(Color.blue.opacity(0.1))
+                    .cornerRadius(5)
+            }
+            .padding(.top, 10)
 
         }
         .padding()
@@ -210,51 +232,110 @@ struct MedicinalPlant: Identifiable {
     let name: String
     let imageName: String
     let description: String
-    let recipe: String
+    let recipeSteps: [String]
+    let finalImageName: String?
 }
+
 
 struct PlantDetailView: View {
     
     let plant: MedicinalPlant
     
     var body: some View {
-        
         ScrollView {
-            
-            VStack(spacing: 20){
+            VStack(spacing: 20) {
                 
+                Text(plant.name)
+                    .font(.title)
+                    .fontWeight(.bold)
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .padding(.top, 20)
+                
+                // Imagen de la planta
                 Image(plant.imageName)
                     .resizable()
                     .scaledToFit()
                     .frame(maxWidth: .infinity)
                     .frame(height: 300)
                     .clipped()
+                    .cornerRadius(15)
+                    .shadow(radius: 10)
                 
-                Text(plant.name)
-                    .font(.largeTitle)
-                    .padding(.top)
+                // Título centrado de la Descripción
+                Text("Descripción")
+                    .font(.title)
+                    .fontWeight(.semibold)
+                    .frame(maxWidth: .infinity, alignment: .center)
                 
-                Text(plant.description)
-                    .font(.body)
-                    .padding()
+                // Descripción con borde y margen
+                VStack(alignment: .leading, spacing: 8) {
+                    Text(plant.description)
+                        .font(.body)
+                        .foregroundColor(.black)
+                        .padding()
+                }
+                .background(Color(.systemGray6))
+                .cornerRadius(12)
+                .padding(.horizontal)
                 
+                // Título centrado de Receta
                 Text("Receta")
-                    .font(.headline)
+                    .font(.title)
+                    .frame(maxWidth: .infinity, alignment: .center)
                     .padding(.top)
                 
-                Text(plant.recipe)
-                    .font(.body)
-                    .padding()
+                // Receta enumerada en pasos
+                VStack(alignment: .leading, spacing: 8) {
+                    ForEach(Array(plant.recipeSteps.enumerated()), id: \.0) { index, step in
+                        HStack {
+                            Text("\(index + 1).")
+                                .foregroundColor(.blue) // Números en azul
+                            Text(step)
+                                .foregroundColor(.black) // Texto en negro
+                        }
+                        .font(.body)
+                        .padding(.horizontal)
+                    }
+                    
+                    // Imagen final de la receta
+                    Image(plant.finalImageName ?? "")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 200)
+                        .cornerRadius(10)
+                }
+                .background(Color(.systemGray6))
+                .cornerRadius(12)
+                .padding(.horizontal)
                 
                 Spacer()
-                
             }
-            
-            .navigationTitle(plant.name)
-            .navigationBarTitleDisplayMode(.inline)
+            .padding()
+        }
+        
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button(action: {
+                    // Acción del botón de compartir
+                    // Lógica de compartir
+                    let activityController = UIActivityViewController(activityItems: [plant.name, plant.description], applicationActivities: nil)
+                    if let rootViewController = UIApplication.shared.windows.first?.rootViewController {
+                        rootViewController.present(activityController, animated: true)
+                    }
+                }) {
+                    Image(systemName: "square.and.arrow.up")
+                        .foregroundColor(.blue)
+                }
+            }
         }
     }
 }
+
+
+
+
 
 let medicinalPlants = [
     
@@ -262,19 +343,40 @@ let medicinalPlants = [
         name:"Árnica",
         imageName: "arnica",
         description: "Los químicos activos en la árnica pueden reducir la hinchazón, disminuir el dolor y actuar como antibióticos. Pero la árnica puede ser peligrosa cuando se toma por vía oral, a menos que se use en diluciones homeopáticas.",
-        recipe: "Pon una olla con dos litros de agua. Agrega lo que tomen tus dedos de árnica. Pon una tapa para conservar el calor. Déjala hervir a fuego medio. Luego de que hierva debes retirarla del fuego. Déjala reposar durante 10 minutos con la tapa puesta. Cuela el té al servirlo en una taza. Puedes endulzarlo al gusto con miel o azúcar y recuerda que tú puedes secar tu árnica para no usarla fresca. "),
+        recipeSteps: [
+                    "Pon una olla con dos litros de agua.",
+                    "Agrega lo que tomen tus dedos de árnica.",
+                    "Pon una tapa para conservar el calor.",
+                    "Déjala hervir a fuego medio.",
+                    "Retira del fuego y deja reposar por 10 minutos.",
+                    "Cuela el té al servirlo y endulza al gusto."],
+        finalImageName: "arnica_tea"),
     
     MedicinalPlant(
         name:"Sábila",
         imageName: "sabila",
         description: "Alivia contusiones, esguinces y dolores",
-        recipe: "Usar con "),
+        recipeSteps: [
+                    "Pon una olla con dos litros de agua.",
+                    "Agrega lo que tomen tus dedos de árnica.",
+                    "Pon una tapa para conservar el calor.",
+                    "Déjala hervir a fuego medio.",
+                    "Retira del fuego y deja reposar por 10 minutos.",
+                    "Cuela el té al servirlo y endulza al gusto."],
+        finalImageName: "arnica_tea"),
     
     MedicinalPlant(
         name:"Manzanilla",
         imageName: "manzanilla",
         description: "Alivia contusiones, esguinces y dolores",
-        recipe: "Usar con ")
+        recipeSteps: [
+                    "Pon una olla con dos litros de agua.",
+                    "Agrega lo que tomen tus dedos de árnica.",
+                    "Pon una tapa para conservar el calor.",
+                    "Déjala hervir a fuego medio.",
+                    "Retira del fuego y deja reposar por 10 minutos.",
+                    "Cuela el té al servirlo y endulza al gusto."],
+        finalImageName: "arnica_tea")
 ]
 
 struct HealthCenterDetailView: View {
