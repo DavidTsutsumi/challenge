@@ -1,93 +1,83 @@
 import SwiftUI
 
 struct RecyView: View {
-    @State private var showMap = false
-    @State private var quizQuestionIndex = 0
-    @State private var quizAnswer = ""
-    @State private var showQuizResult = false
-    
-    // Información sobre reciclaje
-    let recyclingInfo = [
-        "Reciclar ayuda a reducir la cantidad de residuos en los vertederos.",
-        "El reciclaje de aparatos electrónicos es esencial para evitar la contaminación.",
-        "El reciclaje de aparatos electrónicos es esencial para evitar la contaminación.",
-        "Puedes llevar tus pilas usadas a puntos de recolección especializados."
-    ]
-
-    
-    // Preguntas del quiz
-    let quizQuestions = [
-        (question: "¿Qué tipo de material NO se puede reciclar?", options: ["Plástico", "Vidrio", "Papel", "Pilas"], correctAnswer: "Pilas"),
-        (question: "¿Qué color de contenedor se usa para el vidrio?", options: ["Verde", "Azul", "Amarillo", "Rojo"], correctAnswer: "Verde")
-    ]
+    @EnvironmentObject var viewModel: RecycleViewModel
 
     var body: some View {
         ScrollView {
-            VStack(spacing: 20) {
-                // Título
-                Text("Reciclaje")
-                    .font(.largeTitle)
-                    .foregroundColor(.green)
-                    .padding()
+            VStack(alignment: .leading) {
+                Text("Consejos de Reciclaje")
+                    .font(.title)
+                    .fontWeight(.bold)
+                    .foregroundColor(.orange)
+                    .padding(.top)
 
-                // Información sobre reciclaje sin tabulaciones
-                ForEach(recyclingInfo, id: \.self) { info in
-                    Text(info)
-                        .font(.body)
-                        .padding(.horizontal)
-                        .multilineTextAlignment(.leading)
-                }
-
-                // Botón para acceder al mapa
-                Button(action: {
-                    showMap.toggle()
-                }) {
-                    Text("Ver Puntos de Reciclaje en el Mapa")
-                        .font(.headline)
-                        .padding()
-                        .background(Color.green)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-                }
-                .sheet(isPresented: $showMap) {
-                    FullMapView(showFullMap: $showMap)
-                }
-                
-                // Quiz interactivo
-                VStack {
-                    Text(quizQuestions[quizQuestionIndex].question)
-                        .font(.headline)
-                        .padding()
-
-                    ForEach(quizQuestions[quizQuestionIndex].options, id: \.self) { option in
-                        Button(action: {
-                            quizAnswer = option
-                            showQuizResult = true
-                        }) {
-                            Text(option)
-                                .padding()
-                                .background(Color.gray.opacity(0.2))
-                                .cornerRadius(10)
+                // Lista de categorías
+                ForEach(viewModel.categories) { category in
+                    NavigationLink(destination: CategoryDetailView(category: category)) {
+                        HStack {
+                            Image(systemName: category.iconName)
+                                .resizable()
+                                .frame(width: 40, height: 40)
+                                .foregroundColor(category.color)
+                            Text(category.name)
+                                .font(.headline)
+                                .foregroundColor(.black)
+                            Spacer()
+                            Image(systemName: "chevron.right")
+                                .foregroundColor(.gray)
                         }
+                        .padding(.vertical, 8)
                     }
+                    Divider()
+                }
+                .padding(.horizontal)
+
+                // Información educativa adicional
+                VStack(alignment: .leading, spacing: 10) {
+                    Text("Significado de Símbolos de Reciclaje")
+                        .font(.headline)
+                        .padding(.top, 20)
                     
-                    // Mostrar resultado del quiz
-                    if showQuizResult {
-                        Text(quizAnswer == quizQuestions[quizQuestionIndex].correctAnswer ? "¡Correcto!" : "Intenta de nuevo")
-                            .foregroundColor(quizAnswer == quizQuestions[quizQuestionIndex].correctAnswer ? .green : .red)
-                            .padding()
-                        
-                        Button("Siguiente pregunta") {
-                            quizQuestionIndex = (quizQuestionIndex + 1) % quizQuestions.count
-                            showQuizResult = false
-                        }
+                    Text("♻️ Símbolo de reciclaje: Indica que el material es reciclable.\n🛢 Punto de recolección de pilas: Lleva las pilas a un lugar especializado.\n🟢 Vidrio: Se recicla en contenedores verdes.\n🔵 Papel: Se recicla en contenedores azules.")
                         .padding()
-                    }
-                }
-                .padding()
+                        .background(Color.yellow.opacity(0.2))
+                        .cornerRadius(8)
 
-                Spacer()
+                    Text("Contenedores Comunes")
+                        .font(.headline)
+                        .padding(.top, 10)
+
+                    VStack(alignment: .leading) {
+                        HStack {
+                            Image(systemName: "bottle.fill")
+                                .resizable()
+                                .frame(width: 30, height: 30)
+                            Text("Botella de plástico")
+                        }
+                        HStack {
+                            Image(systemName: "bottle")
+                                .resizable()
+                                .frame(width: 30, height: 30)
+                            Text("Botella de vidrio")
+                        }
+                        HStack {
+                            Image(systemName: "trash")
+                                .resizable()
+                                .frame(width: 30, height: 30)
+                            Text("Lata")
+                        }
+                    }
+                    .padding()
+                    .background(Color.blue.opacity(0.2))
+                    .cornerRadius(8)
+                }
+                .padding(.horizontal)
             }
         }
+        .navigationTitle("Reciclaje")
     }
+}
+#Preview {
+    RecycleView()
 }
