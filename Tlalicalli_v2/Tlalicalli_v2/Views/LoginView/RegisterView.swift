@@ -11,9 +11,9 @@ struct RegisterView: View {
     @State private var email: String = ""
     @State private var password: String = ""
     @State private var confirmPassword: String = ""
-    @State private var showError: Bool = false
-    @State private var errorMessage: String = ""
-    @State private var showSuccessMessage: Bool = false
+    @State private var showAlert: Bool = false
+    @State private var alertMessage: String = ""
+    @State private var isSuccess: Bool = false
     @Environment(\.presentationMode) var presentationMode
 
     var body: some View {
@@ -54,15 +54,14 @@ struct RegisterView: View {
             Spacer()
         }
         .padding()
-        .alert(isPresented: $showError) {
-            Alert(title: Text("Error"), message: Text(errorMessage), dismissButton: .default(Text("OK")))
-        }
-        .alert(isPresented: $showSuccessMessage) {
+        .alert(isPresented: $showAlert) {
             Alert(
-                title: Text("Cuenta creada"),
-                message: Text("Tu cuenta ha sido creada exitosamente."),
+                title: Text(isSuccess ? "Cuenta creada" : "Error"),
+                message: Text(alertMessage),
                 dismissButton: .default(Text("OK")) {
-                    presentationMode.wrappedValue.dismiss()
+                    if isSuccess {
+                        presentationMode.wrappedValue.dismiss()
+                    }
                 }
             )
         }
@@ -70,25 +69,30 @@ struct RegisterView: View {
 
     private func register() {
         guard !email.isEmpty, !password.isEmpty, !confirmPassword.isEmpty else {
-            errorMessage = "Por favor, completa todos los campos"
-            showError = true
+            alertMessage = "Por favor, completa todos los campos"
+            isSuccess = false
+            showAlert = true
             return
         }
 
         guard password == confirmPassword else {
-            errorMessage = "Las contraseñas no coinciden"
-            showError = true
+            alertMessage = "Las contraseñas no coinciden"
+            isSuccess = false
+            showAlert = true
             return
         }
 
         guard !UserManager.userExists(email: email) else {
-            errorMessage = "El correo ya está registrado"
-            showError = true
+            alertMessage = "El correo ya está registrado"
+            isSuccess = false
+            showAlert = true
             return
         }
 
         let newUser = User(email: email, password: password)
         UserManager.saveUser(newUser)
-        showSuccessMessage = true  // Mostrar mensaje de éxito
+        alertMessage = "Tu cuenta ha sido creada exitosamente."
+        isSuccess = true
+        showAlert = true
     }
 }
