@@ -49,7 +49,6 @@ struct MainView: View {
                     }
             }
             .accentColor(.blue)
-            .navigationBarTitle("Tlalicalli", displayMode: .inline)
             .navigationBarItems(trailing: menuButton)
         }
     }
