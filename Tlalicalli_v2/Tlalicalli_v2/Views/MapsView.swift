@@ -6,7 +6,7 @@ struct MapView: View {
     @Binding var showFullMap: Bool
     @State private var region = MKCoordinateRegion(
         center: CLLocationCoordinate2D(latitude: 19.3005, longitude: -99.1043),
-        span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+        span: MKCoordinateSpan(latitudeDelta: 0.06, longitudeDelta: 0.06)
     )
     
     @StateObject private var viewModel = DestinationViewModel()
@@ -17,3 +17,4 @@ struct MapView: View {
         }
     }
 }
+
