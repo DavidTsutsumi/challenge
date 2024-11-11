@@ -1,83 +1,171 @@
 import SwiftUI
 
 struct RecyView: View {
-    @EnvironmentObject var viewModel: RecycleViewModel
+    @StateObject private var viewModel = RecycleViewModel()
+    @State private var searchText = ""
 
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading) {
-                Text("Consejos de Reciclaje")
-                    .font(.title)
-                    .fontWeight(.bold)
-                    .foregroundColor(.orange)
+        NavigationView {
+            VStack {
+                // Encabezado principal
+                Text("Guía de Reciclaje y Sostenibilidad")
+                    .font(.largeTitle)
+                    .bold()
                     .padding(.top)
 
-                // Lista de categorías
-                ForEach(viewModel.categories) { category in
-                    NavigationLink(destination: CategoryDetailView(category: category)) {
-                        HStack {
-                            Image(systemName: category.iconName)
-                                .resizable()
-                                .frame(width: 40, height: 40)
-                                .foregroundColor(category.color)
-                            Text(category.name)
-                                .font(.headline)
-                                .foregroundColor(.black)
-                            Spacer()
-                            Image(systemName: "chevron.right")
-                                .foregroundColor(.gray)
-                        }
-                        .padding(.vertical, 8)
-                    }
-                    Divider()
-                }
-                .padding(.horizontal)
-
-                // Información educativa adicional
-                VStack(alignment: .leading, spacing: 10) {
-                    Text("Significado de Símbolos de Reciclaje")
-                        .font(.headline)
-                        .padding(.top, 20)
-                    
-                    Text("♻️ Símbolo de reciclaje: Indica que el material es reciclable.\n🛢 Punto de recolección de pilas: Lleva las pilas a un lugar especializado.\n🟢 Vidrio: Se recicla en contenedores verdes.\n🔵 Papel: Se recicla en contenedores azules.")
-                        .padding()
-                        .background(Color.yellow.opacity(0.2))
-                        .cornerRadius(8)
-
-                    Text("Contenedores Comunes")
-                        .font(.headline)
-                        .padding(.top, 10)
-
-                    VStack(alignment: .leading) {
-                        HStack {
-                            Image(systemName: "bottle.fill")
-                                .resizable()
-                                .frame(width: 30, height: 30)
-                            Text("Botella de plástico")
-                        }
-                        HStack {
-                            Image(systemName: "bottle")
-                                .resizable()
-                                .frame(width: 30, height: 30)
-                            Text("Botella de vidrio")
-                        }
-                        HStack {
-                            Image(systemName: "trash")
-                                .resizable()
-                                .frame(width: 30, height: 30)
-                            Text("Lata")
-                        }
-                    }
-                    .padding()
-                    .background(Color.blue.opacity(0.2))
+                // Campo de búsqueda
+                TextField("Buscar", text: $searchText)
+                    .padding(10)
+                    .background(Color(.systemGray6))
                     .cornerRadius(8)
+                    .padding(.horizontal)
+                    .padding(.bottom, 10)
+
+                ScrollView {
+                    ForEach(viewModel.categories) { category in
+                        VStack(alignment: .leading, spacing: 10) {
+                            // Título de la categoría con imagen a la izquierda
+                            HStack(alignment: .center, spacing: 10) {
+                                Image(category.imageName)
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: 50, height: 50)
+                                    .clipShape(Circle())
+                                    .shadow(radius: 3)
+
+                                Text(category.title)
+                                    .font(.headline)
+                                    .bold()
+                            }
+                            .padding()
+                            .background(
+                                RoundedRectangle(cornerRadius: 40)
+                                    .fill(Color(.systemGray6))
+                            )
+                            .padding(.horizontal)
+
+                            // Lista de elementos de la categoría
+                            ForEach(category.items) { item in
+                                NavigationLink(destination: RecycleDetailView(item: item)) {
+                                    HStack {
+                                        Image(systemName: item.icon)
+                                            .foregroundColor(.blue)
+                                            .frame(width: 30, height: 30)
+                                        Text(item.title)
+                                            .font(.body)
+                                        Spacer()
+                                        Image(systemName: "chevron.right")
+                                            .foregroundColor(.gray)
+                                    }
+                                    .padding()
+                                    .background(Color(.systemBackground))
+                                    .cornerRadius(8)
+                                    .shadow(color: .gray.opacity(0.1), radius: 1, x: 0, y: 1)
+                                }
+                            }
+                        }
+                        .padding(.vertical, 5)
+                    }
                 }
-                .padding(.horizontal)
             }
+            .navigationTitle("")
+            .navigationBarTitleDisplayMode(.inline)
         }
-        .navigationTitle("Reciclaje")
     }
 }
+
+//Intento Implementacion videos 
+//import SwiftUI
+//
+//struct RecyView: View {
+//    @StateObject private var viewModel = RecycleViewModel()
+//    @State private var searchText = ""
+//
+//    var body: some View {
+//        NavigationView {
+//            VStack {
+//                // Encabezado principal
+//                Text("Guía de Reciclaje y Sostenibilidad")
+//                    .font(.largeTitle)
+//                    .bold()
+//                    .padding(.top)
+//
+//                // Campo de búsqueda
+//                TextField("Buscar", text: $searchText)
+//                    .padding(10)
+//                    .background(Color(.systemGray6))
+//                    .cornerRadius(8)
+//                    .padding(.horizontal)
+//                    .padding(.bottom, 10)
+//
+//                ScrollView {
+//                    ForEach(viewModel.categories) { category in
+//                        VStack(alignment: .leading, spacing: 10) {
+//                            // Título de la categoría con imagen a la izquierda
+//                            HStack(alignment: .center, spacing: 10) {
+//                                Image(category.imageName)
+//                                    .resizable()
+//                                    .scaledToFill()
+//                                    .frame(width: 50, height: 50)
+//                                    .clipShape(Circle())
+//                                    .shadow(radius: 3)
+//
+//                                Text(category.title)
+//                                    .font(.headline)
+//                                    .bold()
+//                            }
+//                            .padding()
+//                            .background(
+//                                RoundedRectangle(cornerRadius: 40)
+//                                    .fill(Color(.systemGray6))
+//                            )
+//                            .padding(.horizontal)
+//
+//                            // Lista de elementos de la categoría
+//                            ForEach(category.items) { item in
+//                                NavigationLink(
+//                                    destination: destinationView(for: item)
+//                                ) {
+//                                    HStack {
+//                                        Image(systemName: item.icon)
+//                                            .foregroundColor(.blue)
+//                                            .frame(width: 30, height: 30)
+//                                        Text(item.title)
+//                                            .font(.body)
+//                                        Spacer()
+//                                        Image(systemName: "chevron.right")
+//                                            .foregroundColor(.gray)
+//                                    }
+//                                    .padding()
+//                                    .background(Color(.systemBackground))
+//                                    .cornerRadius(8)
+//                                    .shadow(color: .gray.opacity(0.1), radius: 1, x: 0, y: 1)
+//                                }
+//                            }
+//                        }
+//                        .padding(.vertical, 5)
+//                    }
+//                }
+//            }
+//            .navigationTitle("")
+//            .navigationBarTitleDisplayMode(.inline)
+//        }
+//    }
+//
+//    // Función para determinar la vista de destino según el tipo de `RecycleItem`
+//    @ViewBuilder
+//    private func destinationView(for item: RecycleItem) -> some View {
+//        // Si tiene un enlace de YouTube, usa `RecycleSubcategoryView`
+//        if let youtubeLink = item.youtubeLink, !youtubeLink.isEmpty {
+//            YouTubeView(urlString: youtubeLink)
+//        } else {
+//            // Si no, muestra la vista de detalles estándar
+//            RecycleDetailView(item: item)
+//        }
+//    }
+//}
+//
+
 #Preview {
-    RecycleView()
+    RecyView()
 }
