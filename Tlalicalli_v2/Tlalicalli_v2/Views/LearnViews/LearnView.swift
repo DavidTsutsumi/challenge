@@ -14,7 +14,7 @@ struct LearnView: View {
 
     var body: some View {
         ScrollView {
-            VStack(alignment: .center) { // Cambia a .center para centrar el contenido dentro del VStack
+            VStack(alignment: .center) { 
                 Text("Aprende")
                     .font(.largeTitle)
                     .bold()
@@ -24,7 +24,7 @@ struct LearnView: View {
                     .multilineTextAlignment(.center)
                     .padding(.horizontal)
                 
-                // Botón de "Tus Favoritos" centrado
+                
                 Button(action: {
                     isShowingFavorites.toggle()
                 }) {
@@ -43,7 +43,7 @@ struct LearnView: View {
 
                 Divider().padding(.vertical)
 
-                // Usar el ViewModel para iterar sobre las secciones
+                
                 ForEach(viewModel.sections) { section in
                     SectionView(section: section)
                         .environmentObject(favoritesManager)

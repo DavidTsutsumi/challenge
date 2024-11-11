@@ -3,15 +3,15 @@ import SwiftUI
 
 struct Destination: Identifiable {
 
-    var id = UUID()  // Identificador del lugar
-    var name: String  // Nombre del lugar
-    var location: String   // Lugar
-    var imageName: String  // Nombre de la imagen específica para cada destino
-    var category: String    // Categoría de reciclaje
-    var latitude: Double    // Agregar latitud
-    var longitude: Double   // Agregar longitud
+    var id = UUID()
+    var name: String
+    var location: String
+    var imageName: String
+    var category: String
+    var latitude: Double
+    var longitude: Double
     
-    // Propiedad calculada para determinar el color basado en la categoría
+    
     var color: Color {
         switch category {
         case "Tóxicos":
