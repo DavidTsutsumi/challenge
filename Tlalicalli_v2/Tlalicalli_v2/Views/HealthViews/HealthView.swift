@@ -92,7 +92,7 @@ struct HealthView: View {
                                 
                                 Alert(
                                     title: Text("Informacion"),
-                                    message: Text("La importancia de..."),
+                                    message: Text("La sección de plantas medicinales promueve el uso responsable de recursos naturales locales, brindando información sobre plantas que contribuyen a la salud y el bienestar de la comunidad. Al recuperar saberes tradicionales sobre el cuidado natural, fomentamos prácticas sustentables y fortalecemos la conexión con la biodiversidad de nuestro entorno, impulsando un desarrollo más sostenible."),
                                     dismissButton: .default(Text("Cerrar")))
                             }
                             
