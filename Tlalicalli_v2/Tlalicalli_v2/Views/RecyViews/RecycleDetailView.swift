@@ -6,9 +6,9 @@ struct RecycleDetailView: View {
     var body: some View {
         ScrollView{
             VStack(alignment: .leading, spacing: 20) {
-                Text(item.title)
-                    .font(.title)
-                    .bold()
+//                Text(item.title)
+//                    .font(.title)
+//                    .bold()
                 
                 if let imageName = item.image {
                     HStack {
@@ -26,7 +26,7 @@ struct RecycleDetailView: View {
                 
                 Text(item.description)
                     .font(.body)
-                    .foregroundColor(.gray)
+                    .foregroundColor(.black)
                     .padding(.top, 10)
                 
                 if let youtubeLink = item.youtubeLink {
@@ -34,6 +34,7 @@ struct RecycleDetailView: View {
                         .font(.headline)
                         .foregroundColor(.blue)
                         .padding(.vertical, 10)
+                        .shadow(color: .gray, radius: 5, x: 3, y: 3)
                 }
                 
                 Spacer()

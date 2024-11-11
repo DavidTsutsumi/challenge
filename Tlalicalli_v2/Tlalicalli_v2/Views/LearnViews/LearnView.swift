@@ -15,11 +15,9 @@ struct LearnView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .center) { // Cambia a .center para centrar el contenido dentro del VStack
-                Text("Aprende sobre el Cuidado Ambiental")
+                Text("Aprende")
                     .font(.largeTitle)
-                    .foregroundColor(.blue)
-                    .frame(maxWidth: .infinity, alignment: .center) // Asegura que el título esté centrado horizontalmente
-                    .padding(.horizontal)
+                    .bold()
                 
                 Text("Aquí encontrarás información importante sobre el cuidado ambiental en zonas rurales de México.")
                     .font(.custom("HelveticaNeue", size: 16))
