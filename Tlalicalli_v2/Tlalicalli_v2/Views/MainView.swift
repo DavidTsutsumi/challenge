@@ -50,10 +50,29 @@ struct MainView: View {
                     }
             }
             .accentColor(.blue)
-            .navigationBarItems(trailing: menuButton)
+            .navigationBarItems(
+                leading: decorativeButton, // Botón decorativo en la izquierda
+                trailing: menuButton // Menú en la derecha
+            )
+            .navigationBarTitleDisplayMode(.inline)
         }
     }
 
+    // Botón decorativo redondo en la izquierda
+    private var decorativeButton: some View {
+        Button(action: {
+            // No tiene acción, solo es decorativo
+        }) {
+            Image(systemName: "gift.circle")
+                .font(.system(size: 22))
+                .foregroundColor(.blue)
+                .padding(1)
+                .background(Circle().fill(Color.white))
+                .shadow(radius: 1)
+        }
+    }
+
+    // Botón de menú en la derecha
     private var menuButton: some View {
         Menu {
             Button(action: {
@@ -68,4 +87,3 @@ struct MainView: View {
         }
     }
 }
-
