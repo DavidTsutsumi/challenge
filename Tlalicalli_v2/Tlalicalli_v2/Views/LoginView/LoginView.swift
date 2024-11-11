@@ -5,7 +5,6 @@
 //  Created by David Israel Tsutsumi Bernal on 10/11/24.
 //
 
-// LoginView.swift
 import SwiftUI
 
 struct LoginView: View {
@@ -15,12 +14,12 @@ struct LoginView: View {
     @State private var isPasswordVisible: Bool = false
     @State private var showError: Bool = false
     @State private var errorMessage: String = ""
-    @State private var showRegisterView: Bool = false // Controla la vista de registro
+    @State private var showRegisterView: Bool = false
 
     var body: some View {
         ZStack {
             // Fondo degradado
-            LinearGradient(gradient: Gradient(colors: [Color.blue.opacity(0.1), Color.purple.opacity(0.1)]), startPoint: .top, endPoint: .bottom)
+            LinearGradient(gradient: Gradient(colors: [Color.green.opacity(0.1), Color.green.opacity(0.1)]), startPoint: .top, endPoint: .bottom)
                 .edgesIgnoringSafeArea(.all)
             
             VStack(spacing: 20) {
